@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_office"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/office"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="64dp"
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_add_item" />
+
+    <EditText
+        android:id="@+id/et_office"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:hint="@string/enter_office_address"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:maxEms="12"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_office"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_office" />
+
+    <TextView
+        android:id="@+id/tv_chapter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/chapter"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_office"
+        app:layout_constraintTop_toBottomOf="@+id/tv_office" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/chapters"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_chapter"
+        app:layout_constraintEnd_toEndOf="@+id/et_office"
+        app:layout_constraintTop_toTopOf="@+id/tv_chapter"/>
+
+    <TextView
+        android:id="@+id/tv_item_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/item_description"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_chapter"
+        app:layout_constraintTop_toBottomOf="@+id/tv_chapter" />
+
+    <EditText
+        android:id="@+id/et_item_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="160dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:gravity="top"
+        android:hint="@string/enter_desc"
+        android:ems="18"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_item_description"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_description" />
+
+    <TextView
+        android:id="@+id/tv_item_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/count"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="@+id/et_item_desc"
+        app:layout_constraintTop_toBottomOf="@+id/et_item_desc" />
+
+    <EditText
+        android:id="@+id/et_item_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_count"
+        android:inputType="number"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:ems="7"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_item_count"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_item_count" />
+
+    <Button
+        android:id="@+id/btn_add_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/upload_photo"
+        android:layout_margin="32dp"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/et_item_count"
+        app:layout_constraintStart_toStartOf="@+id/tv_item_count"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_count" />
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:ems="8"
+        android:layout_margin="40dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="40dp"
+        android:text="@string/save"
+        android:ems="8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_back" />
+
+    <TextView
+        android:id="@+id/tv_add_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_item"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
