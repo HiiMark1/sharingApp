@@ -17,6 +17,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
+private const val ARG_NAME_USER_ID = "user_id"
+
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var auth: FirebaseAuth
@@ -41,9 +43,16 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         if (currentUser != null) {
             with(binding) {
-                var userInfo = userInfoDbRef.child(auth.currentUser!!.uid).get().addOnSuccessListener {
+                var user_id = ""
+                if (arguments?.getString(ARG_NAME_USER_ID) != null) {
+                    user_id = arguments?.getString(ARG_NAME_USER_ID).toString()
+                    ivSettings.visibility = View.INVISIBLE
+                } else {
+                    user_id = currentUser.uid
+                }
+                var userInfo = userInfoDbRef.child(user_id).get().addOnSuccessListener {
                     val userInfo = it.getValue(UserInfo::class.java)
-                    if(userInfo!=null){
+                    if (userInfo != null) {
                         tvName.text = userInfo.name
                         tvSurname.text = userInfo.surname
                         tvAgeUserInfo.text = userInfo.age.toString()
@@ -57,7 +66,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 }
 
                 ivSettings.setOnClickListener {
-                    view.findNavController().navigate(R.id.action_profileFragment_to_profileSettingsFragment)
+                    view.findNavController()
+                        .navigate(R.id.action_profileFragment_to_profileSettingsFragment)
                 }
                 btnExit.setOnClickListener {
                     signOut()

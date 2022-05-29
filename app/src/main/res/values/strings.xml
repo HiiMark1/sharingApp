@@ -37,6 +37,9 @@
     <string name="confirm_your_pass">Подтвердите ваш пароль</string>
     <string name="back_to_login">Вернуться ко входу</string>
     <string name="create_account">Создать аккаунт</string>
+    <string name="item_name">Название</string>
+    <string name="enter_name_of_item">Введите название</string>
+    <string name="now_user">сейчас у:</string>
 
 
     <string-array name="chapters">

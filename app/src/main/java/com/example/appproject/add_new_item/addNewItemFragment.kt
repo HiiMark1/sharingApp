@@ -55,12 +55,14 @@ class addNewItemFragment : Fragment(R.layout.fragment_add_item) {
                     if(isEnoughItemInfo()){
                         val item = Item(
                             auth.currentUser?.uid,
+                            etNameOfItem.text.toString(),
                             etOffice.text.toString(),
                             chapter,
                             etItemDesc.text.toString(),
                             count,
                            "https://firebasestorage.googleapis.com/v0/b/sharing-b7eaf.appspot.com/o/the-sledge.webp?alt=media&token=e2a8566c-1e6b-4ff2-891c-1e4363d71952",
-                            ""
+                            "null",
+                            false
                         )
 
                         val key = itemDbRef

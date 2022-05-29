@@ -6,75 +6,151 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Название предмета"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="38dp"
+        android:id="@+id/iv_item_photo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_name"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/tv_name_of_itemm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="228dp"
-        tools:layout_editor_absoluteY="56dp" />
+        android:ems="10"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_address_of_itemm"
+        app:layout_constraintStart_toEndOf="@+id/iv_item_photo"
+        app:layout_constraintTop_toTopOf="@+id/iv_item_photo" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/tv_address_of_itemm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="239dp"
-        tools:layout_editor_absoluteY="123dp" />
+        android:ems="12"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_item_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_item_photo"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name_of_itemm" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/tv_description_of_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="52dp"
-        tools:layout_editor_absoluteY="196dp" />
+        android:text="@string/item_description"
+        android:layout_marginTop="24dp"
+        android:textSize="17sp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_item_photo" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/tv_description_of_itemm"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:text="TextView"
-        tools:layout_editor_absoluteX="46dp"
-        tools:layout_editor_absoluteY="234dp" />
+        android:ems="16"
+        android:layout_marginTop="16dp"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_description_of_item"
+        app:layout_constraintTop_toBottomOf="@+id/tv_description_of_item" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/tv_chapter_of_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="57dp"
-        tools:layout_editor_absoluteY="299dp" />
+        android:text="@string/chapter"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_description_of_itemm"
+        app:layout_constraintTop_toBottomOf="@+id/tv_description_of_itemm" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/tv_chapter_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="184dp"
-        tools:layout_editor_absoluteY="303dp" />
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:ems="8"
+        app:layout_constraintEnd_toEndOf="@+id/tv_description_of_itemm"
+        app:layout_constraintTop_toTopOf="@+id/tv_chapter_of_item" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/tv_now_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/now_user"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/tv_chapter_of_item"
+        app:layout_constraintTop_toBottomOf="@+id/tv_chapter_of_item" />
+
+    <Button
+        android:id="@+id/btn_take_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Взять предмет"
+        android:layout_marginBottom="48dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_now_user_photo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_now_user"
+        app:layout_constraintTop_toBottomOf="@+id/tv_now_user"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tv_name_now_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="420dp" />
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_office_now_user"
+        app:layout_constraintStart_toEndOf="@+id/iv_now_user_photo"
+        app:layout_constraintTop_toTopOf="@+id/iv_now_user_photo" />
+
+    <TextView
+        android:id="@+id/tv_office_now_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="17sp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_now_user_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_now_user_photo"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name_now_user" />
 </androidx.constraintlayout.widget.ConstraintLayout>

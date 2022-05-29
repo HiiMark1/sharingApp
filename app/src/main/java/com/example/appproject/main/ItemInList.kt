@@ -1,8 +1,7 @@
-package com.example.appproject.add_new_item
+package com.example.appproject.main
 
-import android.net.Uri
-
-data class Item(
+data class ItemInList(
+    var id: String? = null,
     var userId: String? = null,
     var name: String? = null,
     var address: String? = null,

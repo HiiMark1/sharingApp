@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_mainFragment_to_addNewItemFragment"
             app:destination="@id/addNewItemFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -60,4 +63,12 @@
         android:id="@+id/addNewItemFragment"
         android:name="com.example.appproject.add_new_item.addNewItemFragment"
         android:label="addNewItemFragment" />
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="com.example.appproject.item.ItemFragment"
+        android:label="ItemFragment" >
+        <action
+            android:id="@+id/action_itemFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,13 +9,13 @@
         android:id="@+id/tv_office"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/office"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="64dp"
-        android:textSize="17sp"
+        android:text="@string/office"
         android:textColor="@color/black"
+        android:textSize="17sp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_add_item" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_name_of_item" />
 
     <EditText
         android:id="@+id/et_office"
@@ -24,7 +25,7 @@
         android:hint="@string/enter_office_address"
         android:textColor="@color/black"
         android:textSize="16sp"
-        android:maxEms="12"
+        android:ems="11"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/tv_office"
         app:layout_constraintEnd_toEndOf="parent"
@@ -133,4 +134,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_name_of_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_name"
+        android:layout_marginStart="40dp"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_add_item" />
+
+    <EditText
+        android:id="@+id/et_name_of_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_name_of_item"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:ems="11"
+        android:gravity="center"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_name_of_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_name_of_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>
