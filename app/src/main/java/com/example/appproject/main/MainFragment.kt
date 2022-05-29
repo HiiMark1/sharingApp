@@ -29,15 +29,16 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         binding = FragmentMainBinding.bind(view)
 
         if (auth.currentUser != null) {
-            showMessage("current user is not null")
+
         } else {
             view?.findNavController()?.navigate(R.id.action_mainFragment_to_loginFragment)
-            showMessage("current user is null")
         }
-    }
 
-    private fun signOut() {
-        Firebase.auth.signOut()
+        with(binding){
+            btnAddNewItem.setOnClickListener {
+                view.findNavController().navigate(R.id.action_mainFragment_to_addNewItemFragment)
+            }
+        }
     }
 
     private fun showMessage(message: String) {

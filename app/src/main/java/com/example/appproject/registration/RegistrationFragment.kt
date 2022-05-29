@@ -7,11 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.appproject.R
 import com.example.appproject.databinding.FragmentRegistrationBinding
+import com.example.appproject.registration.data.UserInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -21,13 +21,15 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
     private lateinit var binding: FragmentRegistrationBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
-    private lateinit var myRef: DatabaseReference
+    private lateinit var userDbRef: DatabaseReference
+    private lateinit var userInfoDbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
         database = Firebase.database
-        myRef = database.getReference("users")
+        userDbRef = database.getReference("users")
+        userInfoDbRef = database.getReference("usersInfo")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,7 +53,7 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    addPhotoAndNick(email)
+                    addDefaultInfo(email)
                     view?.findNavController()
                         ?.navigate(R.id.action_registrationFragment_to_loginFragment)
                     showMessage(R.string.success_registration)
@@ -87,26 +89,16 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         }
     }
 
-    private fun addPhotoAndNick(email: String){
+    private fun addDefaultInfo(email: String){
         val user = Firebase.auth.currentUser
 
-        val profileUpdates = userProfileChangeRequest {
-            displayName = email
-            photoUri =
-                Uri.parse("https://firebasestorage.googleapis.com/v0/b/sharing-b7eaf.appspot.com/o/blank-profile-picture-973460_640.png?alt=media&token=cd210b22-0396-4db2-a410-f8fde87e4e30")
+        if(user!=null){
+            var userInfo = UserInfo(user.uid, "Name1", "Surname1", "address1", 22, "10:00-18:00", "null",
+             "https://firebasestorage.googleapis.com/v0/b/sharing-b7eaf.appspot.com/o/blank-profile-picture-973460_640.png?alt=media&token=cd210b22-0396-4db2-a410-f8fde87e4e30")
+            userInfoDbRef
+                .child(user.uid)
+                .setValue(userInfo)
         }
-
-        user!!.updateProfile(profileUpdates)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val userEntity = User(
-                        user.displayName,
-                        user.photoUrl.toString(),
-                    )
-                    myRef.setValue(userEntity)
-                }
-            }
-
     }
 
     private fun showMessage(stringId: Int) {

@@ -34,6 +34,9 @@
     <string name="registration">Регистрация</string>
     <string name="sing_in">Вход</string>
     <string name="enter_email">Введите вашу почту</string>
+    <string name="confirm_your_pass">Подтвердите ваш пароль</string>
+    <string name="back_to_login">Вернуться ко входу</string>
+    <string name="create_account">Создать аккаунт</string>
 
 
     <string-array name="chapters">

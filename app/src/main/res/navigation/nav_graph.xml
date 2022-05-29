@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_mainFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addNewItemFragment"
+            app:destination="@id/addNewItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -37,9 +40,24 @@
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_profileSettingsFragment"
+            app:destination="@id/profileSettingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.appproject.Settings.SettingsFragment"
         android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/profileSettingsFragment"
+        android:name="com.example.appproject.profile_settigns.ProfileSettingsFragment"
+        android:label="ProfileSettingsFragment" >
+        <action
+            android:id="@+id/action_profileSettingsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewItemFragment"
+        android:name="com.example.appproject.add_new_item.addNewItemFragment"
+        android:label="addNewItemFragment" />
 </navigation>
