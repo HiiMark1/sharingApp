@@ -1,4 +1,4 @@
-package com.example.appproject.profile_settigns
+package com.example.appproject.profile_settigns.presentation
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.appproject.R
 import com.example.appproject.databinding.FragmentProfileSettingsBinding
+import com.example.appproject.profile_settigns.domain.UserInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -33,7 +34,7 @@ class ProfileSettingsFragment : Fragment(R.layout.fragment_profile_settings) {
         binding = FragmentProfileSettingsBinding.bind(view)
 
         var userInfo = userInfoDbRef.child(auth.currentUser!!.uid).get().addOnSuccessListener {
-            val userInfo = it.getValue(com.example.appproject.profile_settigns.UserInfo::class.java)
+            val userInfo = it.getValue(UserInfo::class.java)
             photoUri = userInfo?.photoUri.toString()
             setText(userInfo)
         }
@@ -47,8 +48,19 @@ class ProfileSettingsFragment : Fragment(R.layout.fragment_profile_settings) {
                         age = etAgeUserInfo.text.toString().toInt()
                     }
 
+                    var weekdays = "null"
+                    var weekend = "null"
+
+                    if(etWorkWeekdaysUserInfo.text.toString() != ""){
+                        weekdays = etWorkWeekdaysUserInfo.text.toString()
+                    }
+
+                    if(etWorkWeekendUserInfo.text.toString() != ""){
+                        weekend = etWorkWeekendUserInfo.text.toString()
+                    }
+
                     var userInfo = UserInfo(auth.currentUser!!.uid, etName.text.toString(), etSurname.text.toString(),
-                        etAddressUserInfo.text.toString(), age, tvWorkWeekdaysUserInfo.text.toString(), tvWorkInWeekendUserInfo.text.toString(), photoUri)
+                        etAddressUserInfo.text.toString(), age, weekdays, weekend, photoUri)
 
                     userInfoDbRef.child(currentUser.uid).setValue(userInfo).addOnSuccessListener {
                         view.findNavController().navigate(R.id.action_profileSettingsFragment_to_profileFragment)
@@ -68,8 +80,8 @@ class ProfileSettingsFragment : Fragment(R.layout.fragment_profile_settings) {
             etSurname.setText(userInfo?.surname)
             etAddressUserInfo.setText(userInfo?.address)
             etAgeUserInfo.setText(userInfo?.age.toString())
-            tvWorkInWeekendUserInfo.setText(userInfo?.hoursWeekend)
-            tvWorkWeekdaysUserInfo.setText(userInfo?.hoursWeek)
+            etWorkWeekdaysUserInfo.setText(userInfo?.hoursWeekend)
+            etWorkWeekdaysUserInfo.setText(userInfo?.hoursWeek)
         }
     }
 }

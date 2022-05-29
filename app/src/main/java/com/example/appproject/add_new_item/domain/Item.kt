@@ -1,4 +1,4 @@
-package com.example.appproject.add_new_item
+package com.example.appproject.add_new_item.domain
 
 import android.net.Uri
 

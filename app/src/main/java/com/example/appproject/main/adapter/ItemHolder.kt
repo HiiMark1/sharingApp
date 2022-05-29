@@ -1,17 +1,17 @@
 package com.example.appproject.main.adapter
 
+import android.graphics.Color
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.example.appproject.R
 import com.example.appproject.databinding.ItemThingBinding
-import com.example.appproject.main.ItemInList
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.example.appproject.main.domain.ItemInList
+import com.example.appproject.models.Settings
 
 class ItemHolder(
     private val binding: ItemThingBinding,
@@ -34,6 +34,19 @@ class ItemHolder(
             }
             tvName.text = item.name
             tvAddressItem.text = item.address
+            if(item.nowUserId!="null"){
+                when(Settings.colorForTakenItems){
+                    "red" -> itemView.setBackgroundColor(Color.RED)
+                    "gray" -> itemView.setBackgroundColor(Color.GRAY)
+                    "blue" -> itemView.setBackgroundColor(Color.BLUE)
+                }
+            } else {
+                when(Settings.colorForFreeItems){
+                    "red" -> itemView.setBackgroundColor(Color.RED)
+                    "gray" -> itemView.setBackgroundColor(Color.GRAY)
+                    "blue" -> itemView.setBackgroundColor(Color.BLUE)
+                }
+            }
         }
     }
 

@@ -1,12 +1,12 @@
-package com.example.appproject.add_new_item
+package com.example.appproject.add_new_item.presentation
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.appproject.R
+import com.example.appproject.add_new_item.domain.Item
 import com.example.appproject.databinding.FragmentAddItemBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

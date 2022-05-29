@@ -1,4 +1,4 @@
-package com.example.appproject.profile
+package com.example.appproject.profile.presentation
 
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +9,7 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.appproject.R
 import com.example.appproject.databinding.FragmentProfileBinding
+import com.example.appproject.profile.domain.UserInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -57,8 +58,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         tvSurname.text = userInfo.surname
                         tvAgeUserInfo.text = userInfo.age.toString()
                         tvAddressUserInfo.text = userInfo.address
-                        tvWorkWeekdaysUserInfo.text = userInfo.hoursWeek
-                        tvWorkInWeekendUserInfo.text = userInfo.hoursWeekend
+                        if (userInfo.hoursWeek != "null") {
+                            tvWorkWeekdaysUserInfo.text = userInfo.hoursWeek
+                        }
+                        if (userInfo.hoursWeekend != "null") {
+                            tvWorkInWeekendUserInfo.text = userInfo.hoursWeekend
+                        }
                         ivAvatar.load(Uri.parse(userInfo.photoUri)) {
                             transformations(CircleCropTransformation())
                         }

@@ -1,4 +1,4 @@
-package com.example.appproject.registration.data
+package com.example.appproject.registration.domain
 
 import com.google.firebase.database.IgnoreExtraProperties
 

@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import coil.load
 import com.example.appproject.R
-import com.example.appproject.add_new_item.Item
+import com.example.appproject.add_new_item.domain.Item
 import com.example.appproject.databinding.FragmentItemBinding
-import com.example.appproject.profile_settigns.UserInfo
+import com.example.appproject.profile_settigns.domain.UserInfo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -59,6 +59,7 @@ class ItemFragment : Fragment(R.layout.fragment_item) {
                             btnTakeItem.setOnClickListener {
                                 item.nowUserId = user.uid
                                 itemDbRef.child(item_id).setValue(item)
+                                view.findNavController().navigateUp()
                             }
                         } else {
                             userInfoDbRef.child(item.nowUserId.toString()).get()
@@ -69,8 +70,20 @@ class ItemFragment : Fragment(R.layout.fragment_item) {
                                     ivNowUserPhoto.load(Uri.parse(userNowInfo?.photoUri))
 
                                     ivNowUserPhoto.setOnClickListener {
-                                        view.findNavController().navigate(R.id.action_itemFragment_to_profileFragment,
-                                        bundleOf(ARG_NAME to item.nowUserId))
+                                        view.findNavController().navigate(
+                                            R.id.action_itemFragment_to_profileFragment,
+                                            bundleOf(ARG_NAME to item.nowUserId)
+                                        )
+                                    }
+
+                                    if (userNowInfo?.userId == user.uid) {
+                                        btnBackItem.visibility = View.VISIBLE
+
+                                        btnBackItem.setOnClickListener {
+                                            item.nowUserId = "null"
+                                            itemDbRef.child(item_id).setValue(item)
+                                            view.findNavController().navigateUp()
+                                        }
                                     }
                                 }
                         }

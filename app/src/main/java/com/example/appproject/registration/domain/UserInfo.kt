@@ -1,6 +1,4 @@
-package com.example.appproject.registration.data
-
-import android.net.Uri
+package com.example.appproject.registration.domain
 
 data class UserInfo(
     val userId: String? = null,

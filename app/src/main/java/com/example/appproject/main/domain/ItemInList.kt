@@ -1,4 +1,4 @@
-package com.example.appproject.main
+package com.example.appproject.main.domain
 
 data class ItemInList(
     var id: String? = null,

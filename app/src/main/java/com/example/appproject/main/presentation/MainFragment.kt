@@ -1,4 +1,4 @@
-package com.example.appproject.main
+package com.example.appproject.main.presentation
 
 import android.os.Bundle
 import android.view.View
@@ -8,9 +8,10 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appproject.R
-import com.example.appproject.add_new_item.Item
+import com.example.appproject.add_new_item.domain.Item
 import com.example.appproject.databinding.FragmentMainBinding
 import com.example.appproject.main.adapter.ItemListAdapter
+import com.example.appproject.main.domain.ItemInList
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

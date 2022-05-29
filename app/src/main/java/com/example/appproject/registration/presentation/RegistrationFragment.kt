@@ -1,13 +1,12 @@
-package com.example.appproject.registration
+package com.example.appproject.registration.presentation
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.appproject.R
 import com.example.appproject.databinding.FragmentRegistrationBinding
-import com.example.appproject.registration.data.UserInfo
+import com.example.appproject.registration.domain.UserInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth

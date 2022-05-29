@@ -40,6 +40,9 @@
     <string name="item_name">Название</string>
     <string name="enter_name_of_item">Введите название</string>
     <string name="now_user">сейчас у:</string>
+    <string name="back_item">Освободить предмет</string>
+    <string name="color_for_taken_items">Цвет для занятых предметов</string>
+    <string name="color_for_free_items">Цвет для свободных предметов</string>
 
 
     <string-array name="chapters">
@@ -47,5 +50,11 @@
         <item>книги</item>
         <item>другие приборы</item>
         <item>прочее</item>
+    </string-array>
+
+    <string-array name="colors">
+        <item>red</item>
+        <item>blue</item>
+        <item>gray</item>
     </string-array>
 </resources>
