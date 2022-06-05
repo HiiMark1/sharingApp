@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.appproject.databinding.ActivityMainBinding
-import com.example.appproject.models.Settings
+import com.example.appproject.Settings.Settings
 
 private lateinit var binding: ActivityMainBinding
 

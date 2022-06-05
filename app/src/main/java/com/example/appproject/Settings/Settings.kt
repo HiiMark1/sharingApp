@@ -1,4 +1,4 @@
-package com.example.appproject.models
+package com.example.appproject.Settings
 
 object Settings {
     var colorForFreeItems: String? = "gray"

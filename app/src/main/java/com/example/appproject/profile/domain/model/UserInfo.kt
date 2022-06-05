@@ -1,4 +1,4 @@
-package com.example.appproject.profile_settigns.domain
+package com.example.appproject.profile.domain.model
 
 import android.net.Uri
 

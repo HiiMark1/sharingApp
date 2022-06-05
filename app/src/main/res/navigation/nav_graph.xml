@@ -5,7 +5,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.appproject.login.LoginFragment"
+        android:name="com.example.appproject.login.presentation.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_profileFragment"
@@ -50,7 +50,11 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.appproject.Settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileSettingsFragment"
         android:name="com.example.appproject.profile_settigns.presentation.ProfileSettingsFragment"
@@ -65,7 +69,7 @@
         android:label="addNewItemFragment" />
     <fragment
         android:id="@+id/itemFragment"
-        android:name="com.example.appproject.item.ItemFragment"
+        android:name="com.example.appproject.item.presentation.ItemFragment"
         android:label="ItemFragment" >
         <action
             android:id="@+id/action_itemFragment_to_profileFragment"

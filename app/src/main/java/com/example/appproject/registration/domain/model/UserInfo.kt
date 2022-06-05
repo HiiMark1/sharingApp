@@ -1,4 +1,4 @@
-package com.example.appproject.registration.domain
+package com.example.appproject.registration.domain.model
 
 data class UserInfo(
     val userId: String? = null,

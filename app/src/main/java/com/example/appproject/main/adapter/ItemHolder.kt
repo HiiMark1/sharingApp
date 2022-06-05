@@ -4,14 +4,12 @@ import android.graphics.Color
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
-import com.example.appproject.R
 import com.example.appproject.databinding.ItemThingBinding
 import com.example.appproject.main.domain.ItemInList
-import com.example.appproject.models.Settings
+import com.example.appproject.Settings.Settings
 
 class ItemHolder(
     private val binding: ItemThingBinding,

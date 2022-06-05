@@ -1,12 +1,15 @@
 package com.example.appproject.registration.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.appproject.R
 import com.example.appproject.databinding.FragmentRegistrationBinding
-import com.example.appproject.registration.domain.UserInfo
+import com.example.appproject.di.DIContainer
+import com.example.appproject.utils.ViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -19,22 +22,20 @@ import com.google.firebase.ktx.Firebase
 class RegistrationFragment : Fragment(R.layout.fragment_registration) {
     private lateinit var binding: FragmentRegistrationBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseDatabase
-    private lateinit var userDbRef: DatabaseReference
-    private lateinit var userInfoDbRef: DatabaseReference
+    private lateinit var viewModel: RegistrationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
-        database = Firebase.database
-        userDbRef = database.getReference("users")
-        userInfoDbRef = database.getReference("usersInfo")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.findViewById<BottomNavigationView>(R.id.nav_view)?.visibility =
             View.INVISIBLE
+
+        initObjects()
+        initObservers()
 
         binding = FragmentRegistrationBinding.bind(view)
 
@@ -48,18 +49,13 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
     }
 
     private fun signUp(email: String, password: String) {
-
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    addDefaultInfo(email)
-                    view?.findNavController()
-                        ?.navigate(R.id.action_registrationFragment_to_loginFragment)
-                    showMessage(R.string.success_registration)
-                } else {
-                    showMessage(R.string.something_wrong)
-                }
-            }
+        createUser(email, password)
+        val user = auth.currentUser
+        if (user != null) {
+            view?.findNavController()?.navigate(R.id.action_registrationFragment_to_loginFragment)
+        } else {
+            showMessage(R.string.registration)
+        }
     }
 
     private fun checkEditTexts(): Boolean {
@@ -88,16 +84,17 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         }
     }
 
-    private fun addDefaultInfo(email: String){
+    private fun addDefaultInfo(email: String) {
         val user = Firebase.auth.currentUser
 
-        if(user!=null){
-            var userInfo = UserInfo(user.uid, "Name1", "Surname1", "address1", 22, "10:00-18:00", "null",
-             "https://firebasestorage.googleapis.com/v0/b/sharing-b7eaf.appspot.com/o/blank-profile-picture-973460_640.png?alt=media&token=cd210b22-0396-4db2-a410-f8fde87e4e30")
-            userInfoDbRef
-                .child(user.uid)
-                .setValue(userInfo)
+        if (user != null) {
+            viewModel.addUserInfoInDb(user.uid, email)
         }
+    }
+
+    private fun createUser(email: String, password: String) {
+        viewModel.createUser(email, password)
+        addDefaultInfo(email)
     }
 
     private fun showMessage(stringId: Int) {
@@ -106,5 +103,19 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             stringId,
             Snackbar.LENGTH_LONG
         ).show()
+    }
+
+    private fun initObjects() {
+        val factory = ViewModelFactory(DIContainer)
+        viewModel = ViewModelProvider(
+            this,
+            factory
+        )[RegistrationViewModel::class.java]
+    }
+
+    private fun initObservers() {
+        viewModel.error.observe(viewLifecycleOwner) {
+            Log.e("e", it.message.toString())
+        }
     }
 }

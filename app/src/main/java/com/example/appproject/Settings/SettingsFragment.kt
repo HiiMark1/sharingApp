@@ -8,7 +8,6 @@ import androidx.navigation.findNavController
 import com.example.appproject.MainActivity
 import com.example.appproject.R
 import com.example.appproject.databinding.FragmentSettingsBinding
-import com.example.appproject.models.Settings
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SettingsFragment: Fragment(R.layout.fragment_settings) {
@@ -57,7 +56,7 @@ class SettingsFragment: Fragment(R.layout.fragment_settings) {
                     (it as MainActivity).saveData()
                 }
 
-                view.findNavController().navigate(R.id.action_profileSettingsFragment_to_profileFragment)
+                view.findNavController().navigate(R.id.action_settingsFragment_to_mainFragment)
             }
         }
     }

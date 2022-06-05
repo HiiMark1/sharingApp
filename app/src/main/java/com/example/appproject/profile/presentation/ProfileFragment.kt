@@ -9,7 +9,7 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.appproject.R
 import com.example.appproject.databinding.FragmentProfileBinding
-import com.example.appproject.profile.domain.UserInfo
+import com.example.appproject.profile.domain.model.UserInfo
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
