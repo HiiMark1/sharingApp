@@ -6,14 +6,17 @@ import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.appproject.databinding.ActivityMainBinding
-import com.example.appproject.models.Settings
-
-private lateinit var binding: ActivityMainBinding
+import com.example.appproject.di.AppComponent
+import com.example.appproject.features.models.Settings
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+    lateinit var appComponent: AppComponent
     private var pref: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        appComponent = (application as App).appComponent
+        appComponent.inject(this)
         super.onCreate(savedInstanceState)
         readData()
 

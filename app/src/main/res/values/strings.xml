@@ -43,6 +43,7 @@
     <string name="back_item">Освободить предмет</string>
     <string name="color_for_taken_items">Цвет для занятых предметов</string>
     <string name="color_for_free_items">Цвет для свободных предметов</string>
+    <string name="error_registration">Ошибка! Проверьте подключение к интернету или попробуйте ввести другую почту</string>
 
 
     <string-array name="chapters">

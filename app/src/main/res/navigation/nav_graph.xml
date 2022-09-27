@@ -5,7 +5,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.appproject.login.LoginFragment"
+        android:name="com.example.appproject.features.login.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_profileFragment"
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.example.appproject.registration.presentation.RegistrationFragment"
+        android:name="com.example.appproject.features.registration.presentation.RegistrationFragment"
         android:label="RegistrationFragment" >
         <action
             android:id="@+id/action_registrationFragment_to_loginFragment"
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.appproject.main.presentation.MainFragment"
+        android:name="com.example.appproject.features.main.presentation.MainFragment"
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_loginFragment"
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.appproject.profile.presentation.ProfileFragment"
+        android:name="com.example.appproject.features.profile.presentation.ProfileFragment"
         android:label="ProfileFragment" >
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
@@ -49,11 +49,11 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.appproject.Settings.SettingsFragment"
+        android:name="com.example.appproject.features.Settings.SettingsFragment"
         android:label="SettingsFragment" />
     <fragment
         android:id="@+id/profileSettingsFragment"
-        android:name="com.example.appproject.profile_settigns.presentation.ProfileSettingsFragment"
+        android:name="com.example.appproject.features.profile_settigns.presentation.ProfileSettingsFragment"
         android:label="ProfileSettingsFragment" >
         <action
             android:id="@+id/action_profileSettingsFragment_to_profileFragment"
@@ -61,11 +61,11 @@
     </fragment>
     <fragment
         android:id="@+id/addNewItemFragment"
-        android:name="com.example.appproject.add_new_item.presentation.addNewItemFragment"
+        android:name="com.example.appproject.features.add_new_item.presentation.addNewItemFragment"
         android:label="addNewItemFragment" />
     <fragment
         android:id="@+id/itemFragment"
-        android:name="com.example.appproject.item.ItemFragment"
+        android:name="com.example.appproject.features.item.ItemFragment"
         android:label="ItemFragment" >
         <action
             android:id="@+id/action_itemFragment_to_profileFragment"

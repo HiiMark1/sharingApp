@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -54,4 +55,37 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage-ktx'
 
     implementation 'io.coil-kt:coil:1.4.0'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0"
+
+    // region Network
+    def retrofit = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:${retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofit}"
+
+    def okhttp = "4.9.3"
+    implementation "com.squareup.okhttp3:okhttp:${okhttp}"
+    debugImplementation "com.squareup.okhttp3:logging-interceptor:${okhttp}"
+    // endregion
+
+    implementation 'io.coil-kt:coil:1.4.0'
+
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
+
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+//    implementation 'com.github.instacart.truetime-android:library:3.5'
+
+    def lifecycle = "2.4.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycle}"
+
+    def daggerVer = "2.41"
+    implementation "com.google.dagger:dagger:$daggerVer"
+    implementation "com.google.dagger:dagger-android-support:$daggerVer"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVer"
+    kapt "com.google.dagger:dagger-compiler:$daggerVer"
 }
