@@ -6,6 +6,7 @@ import com.example.appproject.di.ViewModelKey
 import com.example.appproject.features.add_new_item.presentation.AddNewItemViewModel
 import com.example.appproject.features.item.presentation.ItemViewModel
 import com.example.appproject.features.login.presentation.LoginViewModel
+import com.example.appproject.features.main.presentation.MainViewModel
 import com.example.appproject.features.profile.presentation.ProfileViewModel
 import com.example.appproject.features.profile_settigns.presentation.ProfileSettingsViewModel
 import com.example.appproject.features.registration.presentation.RegistrationViewModel
@@ -62,5 +63,12 @@ interface ViewModelModule {
     @ViewModelKey(AddNewItemViewModel::class)
     fun bindAddNewItemViewModel(
         viewModel: AddNewItemViewModel
+    ): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainViewModel::class)
+    fun bindMainViewModel(
+        viewModel: MainViewModel
     ): ViewModel
 }

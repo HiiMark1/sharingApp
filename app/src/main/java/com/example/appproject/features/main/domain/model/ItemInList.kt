@@ -1,5 +1,8 @@
 package com.example.appproject.features.main.domain.model
 
+import com.google.firebase.database.IgnoreExtraProperties
+
+@IgnoreExtraProperties
 data class ItemInList(
     var id: String? = null,
     var userId: String? = null,

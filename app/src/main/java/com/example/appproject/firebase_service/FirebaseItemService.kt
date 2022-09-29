@@ -1,9 +1,12 @@
 package com.example.appproject.firebase_service
 
-import androidx.navigation.findNavController
 import com.example.appproject.features.item.domain.model.Item
+import com.google.android.gms.tasks.Task
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.tasks.asDeferred
 import kotlinx.coroutines.tasks.await
 
 class FirebaseItemService {
@@ -12,6 +15,7 @@ class FirebaseItemService {
 
     suspend fun takeItem(uid: String, item: Item, itemId: String) {
         item.nowUserId = uid
+        item.isTaken = true
         itemDbRef
             .child(itemId)
             .setValue(item)
@@ -24,6 +28,7 @@ class FirebaseItemService {
 
     suspend fun freeItem(item: Item, itemId: String) {
         item.nowUserId = "null"
+        item.isTaken = false
         itemDbRef
             .child(itemId)
             .setValue(item)
@@ -46,6 +51,14 @@ class FirebaseItemService {
                 .setValue(item)
                 .await()
         }
+    }
+
+    suspend fun updateItems(postLimit: Int): Iterable<DataSnapshot> {
+        val posts = itemDbRef.limitToLast(postLimit)
+
+        val task: Task<DataSnapshot> = posts.get()
+        val deferredDataSnapshot: Deferred<DataSnapshot> = task.asDeferred()
+        return deferredDataSnapshot.await().children
     }
 
     companion object {

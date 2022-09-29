@@ -7,7 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.appproject.databinding.ActivityMainBinding
 import com.example.appproject.di.AppComponent
-import com.example.appproject.models.Settings
+import com.example.appproject.features.Settings.models.Settings
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

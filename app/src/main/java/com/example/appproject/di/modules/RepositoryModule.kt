@@ -10,6 +10,8 @@ import com.example.appproject.features.item.domain.repository.ItemRepository
 import com.example.appproject.features.item.domain.repository.UserRepositoryForItem
 import com.example.appproject.features.login.data.LoginRepositoryImpl
 import com.example.appproject.features.login.domain.repository.LoginRepository
+import com.example.appproject.features.main.data.impl.ItemInListRepositoryImpl
+import com.example.appproject.features.main.domain.repository.ItemInListRepository
 import com.example.appproject.features.profile.data.ProfileRepositoryImpl
 import com.example.appproject.features.profile.domain.repository.ProfileRepository
 import com.example.appproject.features.profile_settigns.data.UserInfoRepositoryImpl
@@ -61,4 +63,9 @@ interface RepositoryModule {
     fun profileRepository(
         impl: ProfileRepositoryImpl
     ): ProfileRepository
+
+    @Binds
+    fun itemInListRepository(
+        impl: ItemInListRepositoryImpl
+    ): ItemInListRepository
 }

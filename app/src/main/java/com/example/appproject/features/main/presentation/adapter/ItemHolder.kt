@@ -1,4 +1,4 @@
-package com.example.appproject.features.main.adapter
+package com.example.appproject.features.main.presentation.adapter
 
 import android.graphics.Color
 import android.net.Uri
@@ -9,7 +9,7 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.appproject.databinding.ItemThingBinding
 import com.example.appproject.features.main.domain.model.ItemInList
-import com.example.appproject.models.Settings
+import com.example.appproject.features.Settings.models.Settings
 
 class ItemHolder(
     private val binding: ItemThingBinding,

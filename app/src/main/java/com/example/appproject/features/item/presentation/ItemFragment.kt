@@ -75,7 +75,33 @@ class ItemFragment : Fragment(R.layout.fragment_item) {
                 with(binding) {
                     if (it != null) {
                         uid = it
+
+                        if(item.userId==uid){
+                            ivDelete.visibility = View.VISIBLE
+                            ivDelete.setOnClickListener {
+                                viewModel.deletePost(itemId)
+                                view?.findNavController()?.navigateUp()
+                                showMessage(R.string.item_success_deleted)
+                            }
+                        }
+
+                        if(uid==item.nowUserId){
+                            btnBackItem.visibility = View.VISIBLE
+                            btnBackItem.setOnClickListener {
+                                viewModel.freeItem(item, itemId)
+                                viewModel.getItem(itemId)
+                            }
+                        }
+
+                        if(item.nowUserId!="null"){
                             viewModel.getUserInfo(item.nowUserId!!)
+                        } else {
+                            btnTakeItem.visibility = View.VISIBLE
+                            btnTakeItem.setOnClickListener {
+                                viewModel.takeItem(uid, item, itemId)
+                                viewModel.getItem(itemId)
+                            }
+                        }
                     }
                 }
             }, onFailure = {
@@ -102,31 +128,6 @@ class ItemFragment : Fragment(R.layout.fragment_item) {
                                 R.id.action_itemFragment_to_profileFragment,
                                 bundleOf(ARG_NAME_USER_ID to item.nowUserId)
                             )
-                        }
-
-                        if(it.userId==item.nowUserId){
-                            btnBackItem.visibility = View.VISIBLE
-                            btnBackItem.setOnClickListener {
-                                viewModel.freeItem(item, itemId)
-                                viewModel.getItem(itemId)
-                            }
-                        }
-
-                        if(item.nowUserId != "null") {
-                            btnTakeItem.visibility = View.VISIBLE
-                            btnTakeItem.setOnClickListener {
-                                viewModel.takeItem(uid, item, itemId)
-                                viewModel.getItem(itemId)
-                            }
-                        }
-
-                        if(it.userId==uid){
-                            ivDelete.visibility = View.VISIBLE
-                            ivDelete.setOnClickListener {
-                                viewModel.deletePost(itemId)
-                                view?.findNavController()?.navigateUp()
-                                showMessage(R.string.item_success_deleted)
-                            }
                         }
 
                     }

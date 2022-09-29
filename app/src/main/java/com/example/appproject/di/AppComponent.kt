@@ -2,10 +2,7 @@ package com.example.appproject.di
 
 import android.content.Context
 import com.example.appproject.MainActivity
-import com.example.appproject.di.modules.FirebaseModule
-import com.example.appproject.di.modules.MapperModule
-import com.example.appproject.di.modules.RepositoryModule
-import com.example.appproject.di.modules.ViewModelModule
+import com.example.appproject.di.modules.*
 import com.example.appproject.features.add_new_item.presentation.AddNewItemFragment
 import com.example.appproject.features.item.presentation.ItemFragment
 import com.example.appproject.features.login.presentation.LoginFragment
@@ -42,7 +39,7 @@ interface AppComponent {
 
     fun inject(profileFragment: ProfileFragment)
 
-//    fun inject(mainFragment: MainFragment)
+    fun inject(mainFragment: MainFragment)
 
     @Component.Factory
     interface Factory {

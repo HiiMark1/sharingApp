@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 class ItemRepositoryImpl @Inject constructor(
     private val firebaseItemService: FirebaseItemService,
-    private val firebaseUserService: FirebaseUserService,
 ) : ItemRepository {
     override suspend fun takeItem(uid: String, item: Item, itemId: String) {
         firebaseItemService.takeItem(uid, item, itemId)

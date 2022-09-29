@@ -1,4 +1,4 @@
-package com.example.appproject.features.main.diffutils
+package com.example.appproject.features.main.presentation.diffutils
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.appproject.features.main.domain.model.ItemInList

@@ -2,7 +2,7 @@
     <string name="app_name">AppProject</string>
     <string name="title_profile">Profile</string>
     <string name="title_main">Main</string>
-    <string name="title_settings">Settings</string>
+    <string name="title_settings">Настройки</string>
     <string name="empty_login">Поле Логина не должно быть пустым!</string>
     <string name="empty_password">Поле Пароля не должно быть пустым!</string>
     <string name="something_wrong">Что-то пошло не так</string>
@@ -48,6 +48,8 @@
     <string name="item_success_deleted">Предмет успешно удалён!</string>
     <string name="error_not_enough_info_for_new_item">Заполните все поля!</string>
     <string name="success_saved_info">Новые данные успешно сохранены!</string>
+    <string name="address">Адресс</string>
+    <string name="change_photo">Поменять аватар</string>
 
 
     <string-array name="chapters">

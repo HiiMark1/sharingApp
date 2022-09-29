@@ -1,9 +1,9 @@
-package com.example.appproject.features.main.adapter
+package com.example.appproject.features.main.presentation.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.appproject.features.main.domain.model.ItemInList
-import com.example.appproject.features.main.diffutils.ItemDiffItemCallback
+import com.example.appproject.features.main.presentation.diffutils.ItemDiffItemCallback
 
 class ItemListAdapter(
     private val action: (String) -> Unit,

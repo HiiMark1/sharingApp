@@ -1,8 +1,10 @@
 package com.example.appproject.features.profile_settigns.presentation
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -23,7 +25,17 @@ class ProfileSettingsFragment : Fragment(R.layout.fragment_profile_settings) {
     }
 
     private lateinit var userInfo: UserInfo
-    private lateinit var photoUri: String
+    private lateinit var selectedAvatarUri: Uri
+    private var photoUri: String = ""
+
+    private val selectImageFromGalleryResult =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                selectedAvatarUri = it
+                viewModel.uploadAvatarAndGetIsCompleted(it)
+            }
+
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity as MainActivity).appComponent.inject(this)
@@ -40,6 +52,10 @@ class ProfileSettingsFragment : Fragment(R.layout.fragment_profile_settings) {
         with(binding) {
             btnBack.setOnClickListener {
                 view?.findNavController()?.navigateUp()
+            }
+
+            btnChangeAvatar.setOnClickListener {
+                selectImageFromGallery()
             }
         }
     }
@@ -66,6 +82,26 @@ class ProfileSettingsFragment : Fragment(R.layout.fragment_profile_settings) {
                             saveUserInfo()
                         }
                     }
+                }
+            }, onFailure = {
+                Log.e("e", it.message.toString())
+            })
+        }
+
+        viewModel.isCompletedUploadingAvatar.observe(viewLifecycleOwner) { it ->
+            it.fold(onSuccess = {
+                if (it) {
+                    viewModel.onGetDownloadAvatarUri(selectedAvatarUri)
+                }
+            }, onFailure = {
+                Log.e("e", it.message.toString())
+            })
+        }
+
+        viewModel.downloadAvatarUri.observe(viewLifecycleOwner) { it ->
+            it.fold(onSuccess = {
+                if (it != null) {
+                    photoUri = it.toString()
                 }
             }, onFailure = {
                 Log.e("e", it.message.toString())
@@ -104,16 +140,29 @@ class ProfileSettingsFragment : Fragment(R.layout.fragment_profile_settings) {
                 age = etAgeUserInfo.text.toString().toInt()
             }
 
-            viewModel.updateUserInfo(
-                UserInfo(
-                    userInfo.userId,
-                    name,
-                    surname,
-                    address,
-                    age,
-                    userInfo.photoUri
+            if(photoUri==""){
+                viewModel.updateUserInfo(
+                    UserInfo(
+                        userInfo.userId,
+                        name,
+                        surname,
+                        address,
+                        age,
+                        userInfo.photoUri
+                    )
                 )
-            )
+            } else {
+                viewModel.updateUserInfo(
+                    UserInfo(
+                        userInfo.userId,
+                        name,
+                        surname,
+                        address,
+                        age,
+                        photoUri
+                    )
+                )
+            }
             showMessage(R.string.success_saved_info)
             view?.findNavController()?.navigateUp()
         }
@@ -130,4 +179,6 @@ class ProfileSettingsFragment : Fragment(R.layout.fragment_profile_settings) {
     private fun isNumeric(toCheck: String): Boolean {
         return toCheck.all { char -> char.isDigit() }
     }
+
+    private fun selectImageFromGallery() = selectImageFromGalleryResult.launch("image/*")
 }

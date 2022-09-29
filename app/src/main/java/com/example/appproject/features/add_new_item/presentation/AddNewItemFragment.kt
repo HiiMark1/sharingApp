@@ -9,18 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.appproject.MainActivity
 import com.example.appproject.R
-import com.example.appproject.features.add_new_item.domain.model.Item
 import com.example.appproject.databinding.FragmentAddItemBinding
-import com.example.appproject.databinding.FragmentProfileSettingsBinding
-import com.example.appproject.features.profile_settigns.presentation.ProfileSettingsViewModel
+import com.example.appproject.features.add_new_item.domain.model.Item
 import com.example.appproject.utils.AppViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import javax.inject.Inject
 
 class AddNewItemFragment : Fragment(R.layout.fragment_add_item) {
@@ -59,13 +51,6 @@ class AddNewItemFragment : Fragment(R.layout.fragment_add_item) {
             }
         }
         initObservers()
-        println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" +
-                "" +
-                "" +
-                "" +
-                "" +
-                "" +
-                "!!!!!!!!")
         viewModel.getCurrentUserId()
     }
 
@@ -77,7 +62,7 @@ class AddNewItemFragment : Fragment(R.layout.fragment_add_item) {
                     with(binding) {
                         btnSave.setOnClickListener {
                             if(checkInfo()){
-                                var item = Item(
+                                val item = Item(
                                     uid,
                                     etNameOfItem.text.toString(),
                                     etOffice.text.toString(),

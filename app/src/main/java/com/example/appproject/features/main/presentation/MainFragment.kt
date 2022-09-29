@@ -1,35 +1,48 @@
 package com.example.appproject.features.main.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.example.appproject.MainActivity
 import com.example.appproject.R
 import com.example.appproject.features.add_new_item.domain.model.Item
 import com.example.appproject.databinding.FragmentMainBinding
-import com.example.appproject.features.main.adapter.ItemListAdapter
+import com.example.appproject.features.main.presentation.adapter.ItemListAdapter
 import com.example.appproject.features.main.domain.model.ItemInList
+import com.example.appproject.utils.AppViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import javax.inject.Inject
 
 private const val ARG_NAME = "item_id"
 
 class MainFragment : Fragment(R.layout.fragment_main) {
+    @Inject
+    lateinit var factory: AppViewModelFactory
     private lateinit var binding: FragmentMainBinding
+    private var itemListAdapter: ItemListAdapter? = null
+    var limit = 40
+    private val viewModel: MainViewModel by viewModels {
+        factory
+    }
+
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var itemDbRef: DatabaseReference
-    private lateinit var itemListAdapter: ItemListAdapter
-    private var itemLimit = 30
+    private var itemLimit = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (activity as MainActivity).appComponent.inject(this)
         super.onCreate(savedInstanceState)
 
         auth = Firebase.auth
@@ -43,58 +56,28 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         binding = FragmentMainBinding.bind(view)
 
-        var user = auth.currentUser
-        if (user != null) {
-            updatePosts()
+        observeItems()
 
-            with(binding) {
-                swipeContainer.setOnRefreshListener {
-                    updatePosts()
-                    swipeContainer.isRefreshing = false
-                }
+        viewModel.onGetPosts(limit)
 
-                posts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                        super.onScrolled(recyclerView, dx, dy)
-
-                        if (!recyclerView.canScrollVertically(1) && dy != 0) {
-                            val items = itemDbRef.limitToLast(itemLimit)
-
-                            items.addValueEventListener(object : ValueEventListener {
-                                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                    val itemList = mutableListOf<ItemInList?>()
-                                    for (postSnapshot in dataSnapshot.children) {
-                                        val item = postSnapshot.getValue(Item::class.java)
-                                        itemList.add(
-                                            ItemInList(
-                                                postSnapshot.key,
-                                                item?.userId,
-                                                item?.name,
-                                                item?.address,
-                                                item?.chapter,
-                                                item?.desc,
-                                                item?.photoUri,
-                                                item?.nowUserId,
-                                                item?.isTaken
-                                            )
-                                        )
-                                    }
-                                    itemList.reverse()
-
-                                    itemListAdapter?.submitList(itemList)
-                                    items.removeEventListener(this)
-                                    itemLimit += 30
-                                }
-
-                                override fun onCancelled(databaseError: DatabaseError) {}
-                            })
-                        }
-                    }
-                })
+        with(binding) {
+            swipeContainer.setOnRefreshListener {
+                limit = 30
+                observeItems()
+                swipeContainer.isRefreshing = false
             }
-        } else {
-            view?.findNavController()?.navigate(R.id.action_mainFragment_to_loginFragment)
+
+            posts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    if (!recyclerView.canScrollVertically(1) && dy != 0) {
+                        viewModel.onGetPosts(limit)
+                        observeMoreItems()
+                    }
+                }
+            })
         }
 
         with(binding){
@@ -104,32 +87,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
-    private fun updatePosts() {
-        val posts = itemDbRef.limitToLast(itemLimit)
-
-        posts.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val itemList = mutableListOf<ItemInList?>()
-                for (postSnapshot in dataSnapshot.children) {
-                    val item = postSnapshot.getValue(Item::class.java)
-                    itemList.add(
-                        ItemInList(
-                            postSnapshot.key,
-                            item?.userId,
-                            item?.name,
-                            item?.address,
-                            item?.chapter,
-                            item?.desc,
-                            item?.photoUri,
-                            item?.nowUserId,
-                            item?.isTaken
-                        )
-                    )
-                }
-                itemList.reverse()
+    private fun observeItems() {
+        viewModel.items.observe(viewLifecycleOwner) { it ->
+            it?.fold(onSuccess = { posts ->
                 itemListAdapter = ItemListAdapter {
                     infoAboutItem(it)
-                    itemListAdapter?.submitList(itemList)
+                    itemListAdapter?.submitList(posts)
                 }
 
                 val decorator = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
@@ -139,13 +102,27 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     addItemDecoration(decorator)
                 }
 
-                itemListAdapter?.submitList(itemList)
-                posts.removeEventListener(this)
-                itemLimit += 30
-            }
+                itemListAdapter?.submitList(posts)
+                viewModel.clearPostsLiveData()
+                limit += 30
+                viewModel.items.removeObservers(viewLifecycleOwner)
+            }, onFailure = {
+                Log.e("e", it.message.toString())
+            })
+        }
+    }
 
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
+    private fun observeMoreItems() {
+        viewModel.items.observe(viewLifecycleOwner) { it ->
+            it?.fold(onSuccess = {
+                itemListAdapter?.submitList(it)
+                viewModel.clearPostsLiveData()
+                limit += 30
+                viewModel.items.removeObservers(viewLifecycleOwner)
+            }, onFailure = {
+                Log.e("e", it.message.toString())
+            })
+        }
     }
 
     private fun infoAboutItem(it: String) {
