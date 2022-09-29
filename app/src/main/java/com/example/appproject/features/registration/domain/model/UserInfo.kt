@@ -6,6 +6,5 @@ data class UserInfo(
     val surname: String? = null,
     val address: String? = null,
     val age: Int? = null,
-    val hoursWeek: String? = null,
     val photoUri: String? = null,
 )

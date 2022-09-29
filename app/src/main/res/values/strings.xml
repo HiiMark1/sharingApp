@@ -44,6 +44,10 @@
     <string name="color_for_taken_items">Цвет для занятых предметов</string>
     <string name="color_for_free_items">Цвет для свободных предметов</string>
     <string name="error_registration">Ошибка! Проверьте подключение к интернету или попробуйте ввести другую почту</string>
+    <string name="error_login">Ошибка! Неверный пароль или логин</string>
+    <string name="item_success_deleted">Предмет успешно удалён!</string>
+    <string name="error_not_enough_info_for_new_item">Заполните все поля!</string>
+    <string name="success_saved_info">Новые данные успешно сохранены!</string>
 
 
     <string-array name="chapters">

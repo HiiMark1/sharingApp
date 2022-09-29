@@ -57,9 +57,10 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             it.fold(onSuccess = {
                 val user = Firebase.auth.currentUser
                 if (it && user != null) {
-                    viewModel.addUserInfoInDb(user.uid, email)
+                    viewModel.addUserInfoInDb(user.uid)
                     view?.findNavController()
                         ?.navigate(R.id.action_registrationFragment_to_loginFragment)
+                    showMessage(R.string.success_registration)
                 }
             }, onFailure = {
                 showMessage(R.string.error_registration)

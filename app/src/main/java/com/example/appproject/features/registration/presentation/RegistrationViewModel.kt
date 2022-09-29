@@ -19,10 +19,10 @@ class RegistrationViewModel @Inject constructor(
     private var _error: MutableLiveData<Exception> = MutableLiveData()
     val error: LiveData<Exception> = _error
 
-    fun addUserInfoInDb(uid: String, email: String){
+    fun addUserInfoInDb(uid: String){
         viewModelScope.launch {
             try {
-                addUserInfoInDbUseCase(uid, email)
+                addUserInfoInDbUseCase(uid)
             } catch (e: Exception){
                 _error.value = e
             }

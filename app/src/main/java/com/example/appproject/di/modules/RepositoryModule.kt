@@ -1,93 +1,64 @@
 package com.example.appproject.di.modules
 
+import com.example.appproject.features.add_new_item.data.NewItemRepositoryImpl
+import com.example.appproject.features.add_new_item.data.NewItemUserRepositoryImpl
+import com.example.appproject.features.add_new_item.domain.repository.NewItemRepository
+import com.example.appproject.features.add_new_item.domain.repository.NewItemUserRepository
+import com.example.appproject.features.item.data.ItemRepositoryImpl
+import com.example.appproject.features.item.data.UserRepositoryForItemImpl
+import com.example.appproject.features.item.domain.repository.ItemRepository
+import com.example.appproject.features.item.domain.repository.UserRepositoryForItem
+import com.example.appproject.features.login.data.LoginRepositoryImpl
+import com.example.appproject.features.login.domain.repository.LoginRepository
+import com.example.appproject.features.profile.data.ProfileRepositoryImpl
+import com.example.appproject.features.profile.domain.repository.ProfileRepository
+import com.example.appproject.features.profile_settigns.data.UserInfoRepositoryImpl
+import com.example.appproject.features.profile_settigns.domain.repository.UserInfoRepository
+import com.example.appproject.features.registration.data.RegistrationRepositoryImpl
+import com.example.appproject.features.registration.domain.repository.RegistrationRepository
 import dagger.Binds
 import dagger.Module
 
 @Module
 interface RepositoryModule {
 
-//    @Binds
-//    fun cityRepository(
-//        impl: CityRepositoryImpl
-//    ): CityRepository
-//
-//    @Binds
-//    fun citiesRepository(
-//        impl: CitiesRepositoryImpl
-//    ): CitiesRepository
-//
-//    @Binds
-//    fun firebaseAuthRepo(
-//        impl: FirebaseAuthRepoImpl
-//    ): FirebaseAuthRepo
-//
-//    @Binds
-//    fun userRepoInEditProfile(
-//        impl: UserRepoInEditProfileImpl
-//    ): UserRepoInEditProfile
-//
-//    @Binds
-//    fun postListRepo(
-//        impl: PostListRepoImpl
-//    ): PostListRepo
-//
-//    @Binds
-//    fun userRepoInMain(
-//        impl: UserRepoInMainImpl
-//    ): UserRepoInMain
-//
-//    @Binds
-//    fun postRepoInMyProfile(
-//        impl: PostRepoInMyProfileImpl
-//    ): PostRepoInMyProfile
-//
-//    @Binds
-//    fun userRepo(
-//        impl: UserRepoImpl
-//    ): UserRepo
-//
-//    @Binds
-//    fun newPostRepo(
-//        impl: NewPostRepoImpl
-//    ): NewPostRepo
-//
-//    @Binds
-//    fun userRepoInNewPost(
-//        impl: UserRepoInNewPostImpl
-//    ): UserRepoInNewPost
-//
-//    @Binds
-//    fun userRepoInOther(
-//        impl: UserRepoInOtherImpl
-//    ): UserRepoInOther
-//
-//    @Binds
-//    fun userPostRepo(
-//        impl: UserPostRepoImpl
-//    ): UserPostRepo
-//
-//    @Binds
-//    fun otherUserRepo(
-//        impl: OtherUserRepoImpl
-//    ): OtherUserRepo
-//
-//    @Binds
-//    fun postRepo(
-//        impl: PostRepoImpl
-//    ): PostRepo
-//
-//    @Binds
-//    fun userRepoInPost(
-//        impl: UserRepoInPostImpl
-//    ): UserRepoInPost
-//
-//    @Binds
-//    fun registrationUserRepo(
-//        impl: RegistrationUserRepoImpl
-//    ): RegistrationUserRepo
-//
-//    @Binds
-//    fun userRepoInSettings(
-//        impl: UserRepoInSettingsImpl
-//    ): UserRepoInSettings
+    @Binds
+    fun LoginRepository(
+        impl: LoginRepositoryImpl
+    ): LoginRepository
+
+    @Binds
+    fun newItemUserRepository(
+        impl: NewItemUserRepositoryImpl
+    ): NewItemUserRepository
+
+    @Binds
+    fun newItemRepository(
+        impl: NewItemRepositoryImpl
+    ): NewItemRepository
+
+    @Binds
+    fun userInfoRepository(
+        impl: UserInfoRepositoryImpl
+    ): UserInfoRepository
+
+    @Binds
+    fun itemRepository(
+        impl: ItemRepositoryImpl
+    ): ItemRepository
+
+    @Binds
+    fun userRepositoryForItem(
+        impl: UserRepositoryForItemImpl
+    ): UserRepositoryForItem
+
+    @Binds
+    fun registrationRepository(
+        impl: RegistrationRepositoryImpl
+    ): RegistrationRepository
+
+    @Binds
+    fun profileRepository(
+        impl: ProfileRepositoryImpl
+    ): ProfileRepository
 }

@@ -2,7 +2,7 @@ package com.example.appproject.features.main.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.example.appproject.features.main.domain.ItemInList
+import com.example.appproject.features.main.domain.model.ItemInList
 import com.example.appproject.features.main.diffutils.ItemDiffItemCallback
 
 class ItemListAdapter(

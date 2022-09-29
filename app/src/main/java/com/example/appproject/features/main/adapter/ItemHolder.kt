@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.appproject.databinding.ItemThingBinding
-import com.example.appproject.features.main.domain.ItemInList
-import com.example.appproject.features.models.Settings
+import com.example.appproject.features.main.domain.model.ItemInList
+import com.example.appproject.models.Settings
 
 class ItemHolder(
     private val binding: ItemThingBinding,

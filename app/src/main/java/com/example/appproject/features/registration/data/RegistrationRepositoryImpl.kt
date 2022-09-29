@@ -11,7 +11,7 @@ class RegistrationRepositoryImpl @Inject constructor(
         return firebaseUserService.signUpAndGetIsCompleted(email, password)
     }
 
-    override suspend fun addUserInDb(uid: String, email: String) {
-        firebaseUserService.addUserInDb(uid, email)
+    override suspend fun addUserInDb(uid: String) {
+        firebaseUserService.addUserInDb(uid)
     }
 }

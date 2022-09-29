@@ -1,94 +1,117 @@
 package com.example.appproject.features.add_new_item.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.example.appproject.MainActivity
 import com.example.appproject.R
-import com.example.appproject.features.add_new_item.domain.Item
+import com.example.appproject.features.add_new_item.domain.model.Item
 import com.example.appproject.databinding.FragmentAddItemBinding
+import com.example.appproject.databinding.FragmentProfileSettingsBinding
+import com.example.appproject.features.profile_settigns.presentation.ProfileSettingsViewModel
+import com.example.appproject.utils.AppViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import javax.inject.Inject
 
-class addNewItemFragment : Fragment(R.layout.fragment_add_item) {
+class AddNewItemFragment : Fragment(R.layout.fragment_add_item) {
+    @Inject
+    lateinit var factory: AppViewModelFactory
     private lateinit var binding: FragmentAddItemBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseDatabase
-    private lateinit var itemDbRef: DatabaseReference
+    private val viewModel: AddNewItemViewModel by viewModels {
+        factory
+    }
+
+    private lateinit var uid: String
     private lateinit var chapter: String
-    private var count = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (activity as MainActivity).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-
-        auth = Firebase.auth
-        database = Firebase.database
-        itemDbRef = database.getReference("item")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentUser = auth.currentUser
         binding = FragmentAddItemBinding.bind(view)
-        if (currentUser != null) {
-            with(binding) {
-                spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        chapter = parent?.getItemAtPosition(position).toString()
-                    }
 
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+        with(binding) {
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    chapter = parent?.getItemAtPosition(position).toString()
                 }
 
-                btnSave.setOnClickListener {
-                    if(isEnoughItemInfo()){
-                        val item = Item(
-                            auth.currentUser?.uid,
-                            etNameOfItem.text.toString(),
-                            etOffice.text.toString(),
-                            chapter,
-                            etItemDesc.text.toString(),
-                            count,
-                           "https://firebasestorage.googleapis.com/v0/b/sharing-b7eaf.appspot.com/o/the-sledge.webp?alt=media&token=e2a8566c-1e6b-4ff2-891c-1e4363d71952",
-                            "null",
-                            false
-                        )
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
+        initObservers()
+        println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" +
+                "" +
+                "" +
+                "" +
+                "" +
+                "" +
+                "!!!!!!!!")
+        viewModel.getCurrentUserId()
+    }
 
-                        val key = itemDbRef
-                            .push().key
-                        if(key!=null){
-                            itemDbRef.child(key).setValue(item).addOnSuccessListener {
-                                view.findNavController().navigateUp()
+    private fun initObservers() {
+        viewModel.currentUserId.observe(viewLifecycleOwner) { it ->
+            it.fold(onSuccess = {
+                if (it != null) {
+                    uid = it
+                    with(binding) {
+                        btnSave.setOnClickListener {
+                            if(checkInfo()){
+                                var item = Item(
+                                    uid,
+                                    etNameOfItem.text.toString(),
+                                    etOffice.text.toString(),
+                                    chapter,
+                                    etItemDesc.text.toString(),
+                                    "",
+                                    "null",
+                                    false
+                                )
+                                viewModel.addNewItem(item)
+                                view?.findNavController()?.navigateUp()
+                            } else {
+                                showMessage(R.string.error_not_enough_info_for_new_item)
                             }
                         }
                     }
                 }
-            }
+            }, onFailure = {
+                Log.e("e", it.message.toString())
+            })
         }
     }
 
-    private fun isEnoughItemInfo(): Boolean{
-        with(binding){
-            var ccount = etItemCount.text.toString()
-            if(ccount==""){
-                return false
-            }
-            if(etItemDesc.text.toString() == "" || etOffice.text.toString() == "" || ccount.toInt() < 1) {
-                return false
-            }
-            count = ccount.toInt()
-            return true
+    private fun checkInfo(): Boolean {
+        with(binding) {
+            return (etNameOfItem.text.toString() != "" && etOffice.text.toString() != "" && etItemDesc.text.toString() != "")
         }
+    }
+
+    private fun showMessage(stringId: Int) {
+        Snackbar.make(
+            requireView(),
+            stringId,
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 }

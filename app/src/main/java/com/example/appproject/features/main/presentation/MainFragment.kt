@@ -8,10 +8,10 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appproject.R
-import com.example.appproject.features.add_new_item.domain.Item
+import com.example.appproject.features.add_new_item.domain.model.Item
 import com.example.appproject.databinding.FragmentMainBinding
 import com.example.appproject.features.main.adapter.ItemListAdapter
-import com.example.appproject.features.main.domain.ItemInList
+import com.example.appproject.features.main.domain.model.ItemInList
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -74,7 +74,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                                                 item?.address,
                                                 item?.chapter,
                                                 item?.desc,
-                                                item?.count,
                                                 item?.photoUri,
                                                 item?.nowUserId,
                                                 item?.isTaken
@@ -121,7 +120,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                             item?.address,
                             item?.chapter,
                             item?.desc,
-                            item?.count,
                             item?.photoUri,
                             item?.nowUserId,
                             item?.isTaken

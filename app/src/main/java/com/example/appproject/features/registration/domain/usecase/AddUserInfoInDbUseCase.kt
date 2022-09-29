@@ -8,9 +8,9 @@ import javax.inject.Inject
 class AddUserInfoInDbUseCase @Inject constructor(
     private val registrationRepository: RegistrationRepository
 ) {
-    suspend operator fun invoke(uid: String, email: String) {
+    suspend operator fun invoke(uid: String) {
         return withContext(Dispatchers.IO) {
-            registrationRepository.addUserInDb(uid, email)
+            registrationRepository.addUserInDb(uid)
         }
     }
 }

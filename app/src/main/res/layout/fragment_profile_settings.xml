@@ -83,17 +83,6 @@
         app:layout_constraintStart_toStartOf="@+id/et_address_user_info"
         app:layout_constraintTop_toBottomOf="@+id/et_address_user_info" />
 
-    <EditText
-        android:id="@+id/et_work_weekdays_user_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="12"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="@+id/et_age_user_info"
-        app:layout_constraintTop_toBottomOf="@+id/tv_time_in_weeks" />
-
     <Button
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
@@ -116,36 +105,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_back" />
 
-    <TextView
-        android:id="@+id/tv_time_in_weeks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Время работы по будням"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/et_age_user_info"
-        app:layout_constraintTop_toBottomOf="@+id/et_age_user_info" />
-
-    <TextView
-        android:id="@+id/tv_time_in_weekend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Время работы по выходным"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/et_work_weekdays_user_info"
-        app:layout_constraintTop_toBottomOf="@+id/et_work_weekdays_user_info" />
-
-    <EditText
-        android:id="@+id/et_work_weekend_user_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="12"
-        android:textColor="@color/black"
-        android:textSize="17sp"
-        app:layout_constraintStart_toStartOf="@+id/et_age_user_info"
-        app:layout_constraintTop_toBottomOf="@+id/tv_time_in_weekend" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@ import androidx.navigation.findNavController
 import com.example.appproject.MainActivity
 import com.example.appproject.R
 import com.example.appproject.databinding.FragmentSettingsBinding
-import com.example.appproject.features.models.Settings
+import com.example.appproject.models.Settings
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SettingsFragment: Fragment(R.layout.fragment_settings) {

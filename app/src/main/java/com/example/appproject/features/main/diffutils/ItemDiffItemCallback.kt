@@ -1,7 +1,7 @@
 package com.example.appproject.features.main.diffutils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.appproject.features.main.domain.ItemInList
+import com.example.appproject.features.main.domain.model.ItemInList
 
 class ItemDiffItemCallback: DiffUtil.ItemCallback<ItemInList>() {
     override fun areItemsTheSame(oldItem: ItemInList, newItem: ItemInList): Boolean = oldItem.id == newItem.id

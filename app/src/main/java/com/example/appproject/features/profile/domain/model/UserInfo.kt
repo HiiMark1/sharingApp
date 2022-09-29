@@ -1,4 +1,4 @@
-package com.example.appproject.features.profile.domain
+package com.example.appproject.features.profile.domain.model
 
 data class UserInfo(
     val userId: String? = null,
@@ -6,7 +6,5 @@ data class UserInfo(
     val surname: String? = null,
     val address: String? = null,
     val age: Int? = null,
-    val hoursWeek: String? = null,
-    val hoursWeekend: String? = null,
     val photoUri: String? = null,
 )

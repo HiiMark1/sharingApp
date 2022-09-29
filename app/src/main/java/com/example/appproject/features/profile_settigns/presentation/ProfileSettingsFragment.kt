@@ -1,87 +1,133 @@
 package com.example.appproject.features.profile_settigns.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.example.appproject.MainActivity
 import com.example.appproject.R
 import com.example.appproject.databinding.FragmentProfileSettingsBinding
-import com.example.appproject.features.profile_settigns.domain.UserInfo
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.example.appproject.features.profile_settigns.domain.model.UserInfo
+import com.example.appproject.utils.AppViewModelFactory
+import com.google.android.material.snackbar.Snackbar
+import javax.inject.Inject
 
 class ProfileSettingsFragment : Fragment(R.layout.fragment_profile_settings) {
+    @Inject
+    lateinit var factory: AppViewModelFactory
     private lateinit var binding: FragmentProfileSettingsBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseDatabase
-    private lateinit var userInfoDbRef: DatabaseReference
+    private val viewModel: ProfileSettingsViewModel by viewModels {
+        factory
+    }
+
+    private lateinit var userInfo: UserInfo
     private lateinit var photoUri: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        (activity as MainActivity).appComponent.inject(this)
         super.onCreate(savedInstanceState)
-
-        auth = Firebase.auth
-        database = Firebase.database
-        userInfoDbRef = database.getReference("usersInfo")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentProfileSettingsBinding.bind(view)
 
-        var userInfo = userInfoDbRef.child(auth.currentUser!!.uid).get().addOnSuccessListener {
-            val userInfo = it.getValue(UserInfo::class.java)
-            photoUri = userInfo?.photoUri.toString()
-            setText(userInfo)
-        }
+        initObservers()
+        viewModel.getCurrentUserId()
 
-        var currentUser = auth.currentUser
-        if(currentUser!=null){
-            with(binding) {
-                btnSave.setOnClickListener {
-                    var age = 0
-                    if(etAgeUserInfo.text.toString()!=""){
-                        age = etAgeUserInfo.text.toString().toInt()
-                    }
-
-                    var weekdays = "null"
-                    var weekend = "null"
-
-                    if(etWorkWeekdaysUserInfo.text.toString() != ""){
-                        weekdays = etWorkWeekdaysUserInfo.text.toString()
-                    }
-
-                    if(etWorkWeekendUserInfo.text.toString() != ""){
-                        weekend = etWorkWeekendUserInfo.text.toString()
-                    }
-
-                    var userInfo = UserInfo(auth.currentUser!!.uid, etName.text.toString(), etSurname.text.toString(),
-                        etAddressUserInfo.text.toString(), age, weekdays, weekend, photoUri)
-
-                    userInfoDbRef.child(currentUser.uid).setValue(userInfo).addOnSuccessListener {
-                        view.findNavController().navigate(R.id.action_profileSettingsFragment_to_profileFragment)
-                    }
-                }
-
-                btnBack.setOnClickListener {
-                    view.findNavController().navigate(R.id.action_profileSettingsFragment_to_profileFragment)
-                }
+        with(binding) {
+            btnBack.setOnClickListener {
+                view?.findNavController()?.navigateUp()
             }
         }
     }
 
-    private fun setText(userInfo: UserInfo?){
-        with(binding){
+    private fun initObservers() {
+        viewModel.currentUserId.observe(viewLifecycleOwner) { it ->
+            it.fold(onSuccess = {
+                if (it != null) {
+                    viewModel.getUserInfo(it)
+                }
+            }, onFailure = {
+                Log.e("e", it.message.toString())
+            })
+        }
+
+        viewModel.user.observe(viewLifecycleOwner) { it ->
+            it.fold(onSuccess = {
+                if (it != null) {
+                    userInfo = it
+                    with(binding) {
+                        setText(userInfo)
+
+                        btnSave.setOnClickListener {
+                            saveUserInfo()
+                        }
+                    }
+                }
+            }, onFailure = {
+                Log.e("e", it.message.toString())
+            })
+        }
+    }
+
+    private fun setText(userInfo: UserInfo?) {
+        with(binding) {
             etName.setText(userInfo?.name)
             etSurname.setText(userInfo?.surname)
             etAddressUserInfo.setText(userInfo?.address)
             etAgeUserInfo.setText(userInfo?.age.toString())
-            etWorkWeekdaysUserInfo.setText(userInfo?.hoursWeekend)
-            etWorkWeekdaysUserInfo.setText(userInfo?.hoursWeek)
         }
+    }
+
+    private fun saveUserInfo() {
+        with(binding) {
+            var name = userInfo.name
+            if (etName.text != null && etName.text.toString().length != 0 && etName.text.length < 32) {
+                name = etName.text.toString()
+            }
+
+            var surname = userInfo.surname
+            if (etSurname.text != null && etSurname.text.toString().length != 0 && etSurname.text.length < 32) {
+                surname = etSurname.text.toString()
+            }
+
+            var address = userInfo.address
+            if (etAddressUserInfo.text != null && etAddressUserInfo.text.toString().length != 0 && etAddressUserInfo.text.length < 64) {
+                address = etAddressUserInfo.text.toString()
+            }
+
+            var age = userInfo.age
+            if (etAgeUserInfo.text.toString() != "" && isNumeric(etAddressUserInfo.text.toString())) {
+                age = etAgeUserInfo.text.toString().toInt()
+            }
+
+            viewModel.updateUserInfo(
+                UserInfo(
+                    userInfo.userId,
+                    name,
+                    surname,
+                    address,
+                    age,
+                    userInfo.photoUri
+                )
+            )
+            showMessage(R.string.success_saved_info)
+            view?.findNavController()?.navigateUp()
+        }
+    }
+
+    private fun showMessage(stringId: Int) {
+        Snackbar.make(
+            requireView(),
+            stringId,
+            Snackbar.LENGTH_LONG
+        ).show()
+    }
+
+    private fun isNumeric(toCheck: String): Boolean {
+        return toCheck.all { char -> char.isDigit() }
     }
 }

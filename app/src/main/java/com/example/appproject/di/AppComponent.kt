@@ -3,8 +3,15 @@ package com.example.appproject.di
 import android.content.Context
 import com.example.appproject.MainActivity
 import com.example.appproject.di.modules.FirebaseModule
+import com.example.appproject.di.modules.MapperModule
 import com.example.appproject.di.modules.RepositoryModule
 import com.example.appproject.di.modules.ViewModelModule
+import com.example.appproject.features.add_new_item.presentation.AddNewItemFragment
+import com.example.appproject.features.item.presentation.ItemFragment
+import com.example.appproject.features.login.presentation.LoginFragment
+import com.example.appproject.features.main.presentation.MainFragment
+import com.example.appproject.features.profile.presentation.ProfileFragment
+import com.example.appproject.features.profile_settigns.presentation.ProfileSettingsFragment
 import com.example.appproject.features.registration.presentation.RegistrationFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -13,43 +20,29 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-//        AppModule::class,
-//        NetModule::class,
+        MapperModule::class,
         RepositoryModule::class,
         ViewModelModule::class,
-//        DbModule::class,
-        FirebaseModule::class
+        FirebaseModule::class,
     ]
 )
 interface AppComponent {
 
     fun inject(mainActivity: MainActivity)
 
-//    fun inject(articleAboutCityFragment: ArticleAboutCityFragment)
-//
-//    fun inject(citiesFragment: CitiesFragment)
-//
-//    fun inject(notesFragment: NotesFragment)
-//
-//    fun inject(loginFragment: LoginFragment)
-//
-//    fun inject(editProfileFragment: EditProfileFragment)
-//
-//    fun inject(mainFragment: MainFragment)
-//
-//    fun inject(myProfileFragment: MyProfileFragment)
-//
-//    fun inject(newPostFragment: NewPostFragment)
-//
-//    fun inject(otherFragment: OtherFragment)
-//
-//    fun inject(otherProfileFragment: OtherProfileFragment)
-//
-//    fun inject(postFragment: PostFragment)
-//
+    fun inject(loginFragment: LoginFragment)
+
+    fun inject(profileSettingsFragment: ProfileSettingsFragment)
+
+    fun inject(itemFragment: ItemFragment)
+
     fun inject(registrationFragment: RegistrationFragment)
-//
-//    fun inject(settingsFragment: SettingsFragment)
+
+    fun inject(addNewItemFragment: AddNewItemFragment)
+
+    fun inject(profileFragment: ProfileFragment)
+
+//    fun inject(mainFragment: MainFragment)
 
     @Component.Factory
     interface Factory {
