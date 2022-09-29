@@ -9,6 +9,9 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.tasks.asDeferred
 import kotlinx.coroutines.tasks.await
 
+private const val DEFAULT_PHOTO =
+    "https://firebasestorage.googleapis.com/v0/b/sharing-b7eaf.appspot.com/o/the-sledge.webp?alt=media&token=e2a8566c-1e6b-4ff2-891c-1e4363d71952"
+
 class FirebaseItemService {
 
     val itemDbRef = Firebase.database.getReference("item")
@@ -43,6 +46,7 @@ class FirebaseItemService {
     }
 
     suspend fun addNewItem(item: com.example.appproject.features.add_new_item.domain.model.Item){
+        item.photoUri = DEFAULT_PHOTO
         val key = itemDbRef
             .push().key
         if(key!=null){
